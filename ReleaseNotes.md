@@ -1,5 +1,10 @@
 # Release Notes
 
+2024/12/30 v1.0.0:
+
+- Added support for game controllers.
+- Added Trimui release.
+
 2022/6/2 v1.0.0-rc:
 
 - Updated README.md

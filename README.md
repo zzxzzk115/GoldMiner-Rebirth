@@ -1,19 +1,19 @@
-# GoldMiner-GameShell
+# GoldMiner-Rebirth
 
-The classic game remake. Build for GameShell. Made with [LÖVE](https://love2d.org/)(11.1).
+The classic game remake. Build for GameShell, Trimui (Smart Pro and Brick) and other LOVE2D compatible gaming handheld devices. Made with [LÖVE](https://love2d.org/)(11.1).
 
-Download the latest Release [here](https://github.com/zzxzzk115/GoldMiner-GameShell/releases/latest).
+Download the latest Release [here](https://github.com/zzxzzk115/GoldMiner-Rebirth/releases/latest).
 
 ## How to play
 
-| Action                                                     | GameShell                | PC             |
-| ---------------------------------------------------------- | ------------------------ | -------------- |
-| Exit                                                       | Menu button              | Escape         |
-| Menu Confirm or Buy                                        | A button or Start button | Enter          |
-| Use dynamite                                               | Y button or Up           | Up             |
-| Grab                                                       | A button or Down         | Down           |
-| Exit current level when you reach goal or Confirm shopping | Select button            | Space          |
-| Select the shop item you wanna buy                         | Left and Right           | Left and Right |
+| Action                                                       | GameShell, Trimui & others | PC             |
+| ------------------------------------------------------------ | -------------------------- | -------------- |
+| Exit the game                                                | Menu button                | Escape         |
+| Menu Confirm or Buy items                                    | A/B button or Start button | Enter          |
+| Throw a dynamite                                             | X/Y button or D-pad Up     | Up             |
+| Release the hook                                             | A/B button or D-pad Down   | Down           |
+| Exit the current level when you reach the goal or Confirm shopping | Select button              | Space          |
+| Select the shop item                                         | D-pad Left and Right       | Left and Right |
 
 ## Screenshots
 

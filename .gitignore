@@ -2,3 +2,6 @@
 *.zip
 *.love
 [Bb]uild/
+
+# vscode
+.vscode/

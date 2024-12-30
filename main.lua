@@ -8,7 +8,12 @@ require 'Util'
 require 'GameStates'
 require 'Animation'
 
+gamepad = { }
+
 function love.load()
+    -- Load controller mappings.
+    love.joystick.loadGamepadMappings("configs/gamecontrollerdb.txt")
+
     -- Get our actual screen size.
     local actualWidth = love.graphics.getWidth()
     local actualHeight = love.graphics.getHeight()
@@ -28,6 +33,9 @@ function love.load()
         fullscreen = true,
         resizable = false
     })
+
+    -- Hide the mouse cursor
+    love.mouse.setVisible(false)
     
     -- Init fonts
     defaultFont = love.graphics.getFont()
@@ -218,4 +226,26 @@ function love.keypressed(key)
     if key == 'escape' then
         love.event.quit()
     end
+end
+
+function love.joystickadded(joystick)
+    print("Joystick added: " .. joystick:getName())
+end
+
+function love.joystickremoved(joystick)
+    print("Joystick removed: " .. joystick:getName())
+end
+
+function love.gamepadpressed(joystick, button)
+    if joystick == gamepad.joystick then
+        if button == "guide" then
+            love.event.quit()
+        end
+        return
+    end
+
+    gamepad.joystick = joystick
+    local name = joystick:getName()
+    local index = joystick:getConnectedIndex()
+    print(string.format("Changing active gamepad to #%d '%s'.", index, name))
 end

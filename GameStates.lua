@@ -46,13 +46,29 @@ end
 function menu:keypressed(key)
     if key == 'up' then self.arrowState = math.max(start, self.arrowState - 1)
     elseif key == 'down' then self.arrowState = math.min(self.arrowState + 1, highScore)
-    elseif key == 'return' or key == 'enter' or key == 'k' then
+    elseif key == 'return' or key == 'enter' or key == 'j' or key == 'k' then
         if self.arrowState == start then
             -- Start game
             Gamestate.switch(showNextGoal)
         elseif self.arrowState == highScore then
             -- Show high score
             Gamestate.switch(showHighScore)
+        end
+    end
+end
+
+function menu.gamepadpressed(self, joystick, button)
+    if joystick == gamepad.joystick then
+        if button == 'dpup' then self.arrowState = math.max(start, self.arrowState - 1)
+        elseif button == 'dpdown' then self.arrowState = math.min(self.arrowState + 1, highScore)
+        elseif button == 'start' or button == 'a' or button == 'b' then
+            if self.arrowState == start then
+                -- Start game
+                Gamestate.switch(showNextGoal)
+            elseif self.arrowState == highScore then
+                -- Show high score
+                Gamestate.switch(showHighScore)
+            end
         end
     end
 end
@@ -88,6 +104,12 @@ function showHighScore:keypressed(key)
     Gamestate.switch(menu)
 end
 
+function showHighScore.gamepadpressed(self, joystick, button)
+    if joystick == gamepad.joystick then
+        Gamestate.switch(menu)
+    end
+end
+
 function showHighScore:draw()
     push:start()
     -- Draw BG
@@ -107,6 +129,12 @@ end
 
 function showNewHighScore:keypressed(key)
     Gamestate.switch(menu)
+end
+
+function showNewHighScore.gamepadpressed(self, joystick, button)
+    if joystick == gamepad.joystick then
+        Gamestate.switch(menu)
+    end
 end
 
 function showNewHighScore:draw()
@@ -262,7 +290,7 @@ function shop:keypressed(key)
     if key == 'space' then
         -- Finish shopping
         self.isPlayerFinishShopping = true
-    elseif key == 'k' or key == 'return' or key == 'enter' then
+    elseif key == 'j' or key == 'k' or key == 'return' or key == 'enter' then
         -- Buy prop
         local prop = self.items[self.selectorIndex]
         if prop  ~= nil and not self.isPlayerFinishShopping then
@@ -289,6 +317,42 @@ function shop:keypressed(key)
         self.selectorIndex = math.max(1, self.selectorIndex -1) 
     elseif key == 'right' then
         self.selectorIndex = math.min(self.selectorIndex + 1, #self.items)
+    end
+end
+
+function shop.gamepadpressed(self, joystick, button)
+    if joystick == gamepad.joystick then
+        if button == 'back' then
+            -- Finish shopping
+            self.isPlayerFinishShopping = true
+        elseif button == 'start' or button == 'a' or button == 'b' then
+            -- Buy prop
+            local prop = self.items[self.selectorIndex]
+            if prop  ~= nil and not self.isPlayerFinishShopping then
+                if player.money >= propsConfig[prop].price then
+                    self.isPlayerBought = true
+                    if sounds['Money']:isPlaying() then
+                        sounds['Money']:stop()
+                    end
+                    sounds['Money']:play()
+                    -- Decrease player's money
+                    player.money = player.money - propsConfig[prop].price
+                    player.money4View = player.money4View - propsConfig[prop].price
+                    -- Take effect
+                    propsConfig[prop].effect(player)
+                    -- Remove
+                    table.remove(self.items, self.selectorIndex)
+                    table.remove(self.selectorInfo, self.selectorIndex)
+                    self.selectorIndex = 1
+                else
+                    self.dialogueTextContent = "You don't seem to have any money\n:("
+                end
+            end
+        elseif button == 'dpleft' then
+            self.selectorIndex = math.max(1, self.selectorIndex -1) 
+        elseif button == 'dpright' then
+            self.selectorIndex = math.min(self.selectorIndex + 1, #self.items)
+        end
     end
 end
 
@@ -383,12 +447,12 @@ function game:leave()
 end 
 
 function game:keypressed(key)
-    if key == 'down' or key == 'k' then
+    if key == 'down' or key == 'j' or key == 'k' then
         if not hook.isShowBonus and not hook.isGrabing then
             hook.isGrabing = true
             sounds['GrabStart']:play()
         end
-    elseif key == 'up' or key == 'u' then
+    elseif key == 'up' or key == 'u' or key == 'i' then
         player:tryUseDynamite()
     elseif key == 'space' then
         if player:reachGoal()  then
@@ -415,6 +479,23 @@ function game:keypressed(key)
             persistentData.highScore = 0
             persistentData.highLevel = 1
             love.filesystem.remove("savedata.txt")
+        end
+    end
+end
+
+function game.gamepadpressed(self, joystick, button)
+    if joystick == gamepad.joystick then
+        if button == 'dpdown' or button == 'a' or button == 'b' then
+            if not hook.isShowBonus and not hook.isGrabing then
+                hook.isGrabing = true
+                sounds['GrabStart']:play()
+            end
+        elseif button == 'dpup' or button == 'x' or button == 'y' then
+            player:tryUseDynamite()
+        elseif button == 'back' then
+            if player:reachGoal()  then
+                Gamestate.switch(showMadeGoal)
+            end
         end
     end
 end
@@ -479,7 +560,7 @@ function game:draw()
     local levelText = love.graphics.newText(gameFont, {COLOR_DEEP_ORANGE, 'Level: ', COLOR_ORANGE, player.level})
     love.graphics.draw(levelText, 250, 25)
     if player:reachGoal() then
-        local reachGoalTipText = love.graphics.newText(gameFont, {COLOR_ORANGE, 'Press Select to Exit'})
+        local reachGoalTipText = love.graphics.newText(gameFont, {COLOR_ORANGE, 'Press Select to Skip'})
         love.graphics.draw(reachGoalTipText, 200, 5)
     end
     if self.isShowBonus then
@@ -523,6 +604,20 @@ function gameOver:keypressed(key)
         Gamestate.switch(showNewHighScore)
     else
         Gamestate.switch(menu)
+    end
+end
+
+function gameOver.gamepadpressed(self, joystick, button)
+    if joystick == gamepad.joystick then
+        if player.money > persistentData.highScore then
+            persistentData.highScore = player.money
+            persistentData.highLevel = player.level
+            serialized = lume.serialize(persistentData)
+            love.filesystem.write("savedata.txt", serialized)
+            Gamestate.switch(showNewHighScore)
+        else
+            Gamestate.switch(menu)
+        end
     end
 end
 
