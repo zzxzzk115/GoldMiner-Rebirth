@@ -27,11 +27,21 @@ Download the latest Release [here](https://github.com/zzxzzk115/GoldMiner-Rebirt
 
 ## Photos
 
+### GameShell
+
 ![menu](./pictures/photos_01_main_menu.jpg)
 
 ![first goal](./pictures/photos_02_first_goal.jpg)
 
 ![level01](./pictures/photos_03_level01.jpg)
+
+### Trimui Brick (RED)
+
+![menu](./pictures/photos_04_trimui_brick_red_01.jpg)
+
+![first goal](./pictures/photos_05_trimui_brick_red_02.jpg)
+
+![level01](./pictures/photos_06_trimui_brick_red_03.jpg)
 
 ## 3rd
 
@@ -45,7 +55,7 @@ Checkout release notes [here](./ReleaseNotes.md).
 
 ## Project status
 
-Checkout project status [here](https://github.com/zzxzzk115/GoldMiner-GameShell/projects/1).
+Checkout project status [here](https://github.com/zzxzzk115/GoldMiner-Rebirth/projects/1).
 
 
 ## License
