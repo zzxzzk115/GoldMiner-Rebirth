@@ -4,7 +4,7 @@ The classic game remake. Build for GameShell, Trimui (Smart Pro and Brick) and o
 
 Download the latest Release [here](https://github.com/zzxzzk115/GoldMiner-Rebirth/releases/latest).
 
-This game is available on the [PortMaster](https://portmaster.games/index.html) platform (Source can be found at [here](https://github.com/PortsMaster/PortMaster-New/tree/main/ports/goldminer)). Many thanks to [JanTrueno](https://github.com/JanTrueno)!
+This game is available on the [PortMaster](https://portmaster.games/index.html) platform (Source can be found [here](https://github.com/PortsMaster/PortMaster-New/tree/main/ports/goldminer)). Many thanks to [JanTrueno](https://github.com/JanTrueno)!
 
 ## How to play
 
